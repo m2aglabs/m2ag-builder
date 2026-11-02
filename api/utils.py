@@ -45,7 +45,7 @@ class Utils:
 
     @staticmethod
     def get_pip(package):
-        p = subprocess.Popen([f'{os.getcwd()}/venv/bin/pip3', 'show', package], stdout=subprocess.PIPE)
+        p = subprocess.Popen([f'{os.getcwd()}/.venv/bin/pip3', 'show', package], stdout=subprocess.PIPE)
         line = ''
         for i in range(0, 50):
             line += str(p.stdout.readline().decode('utf-8'))
@@ -53,7 +53,7 @@ class Utils:
 
     @staticmethod
     def get_pip_list():
-        p = subprocess.Popen([f'{os.getcwd()}/venv/bin/pip3', 'list'], stdout=subprocess.PIPE)
+        p = subprocess.Popen([f'{os.getcwd()}/.venv/bin/pip3', 'list'], stdout=subprocess.PIPE)
         line = ''
         for i in range(0, 50):
             line += str(p.stdout.readline().decode('utf-8'))
@@ -61,7 +61,7 @@ class Utils:
 
     @staticmethod
     def put_pip(package):
-        p = subprocess.Popen([f'{os.getcwd()}/venv/bin/pip3', 'install', package], stdout=subprocess.PIPE)
+        p = subprocess.Popen([f'{os.getcwd()}/.venv/bin/pip3', 'install', package], stdout=subprocess.PIPE)
         line = ''
         for i in range(0, 50):
             line += str(p.stdout.readline().decode('utf-8'))
@@ -69,7 +69,7 @@ class Utils:
 
     @staticmethod
     def delete_pip(package):
-        p = subprocess.Popen([f'{os.getcwd()}/venv/bin/pip3', 'uninstall', package, '-y'], stdout=subprocess.PIPE)
+        p = subprocess.Popen([f'{os.getcwd()}/.venv/bin/pip3', 'uninstall', package, '-y'], stdout=subprocess.PIPE)
         line = ''
         for i in range(0, 50):
             line += str(p.stdout.readline().decode('utf-8'))

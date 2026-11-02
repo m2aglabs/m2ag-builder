@@ -37,10 +37,13 @@ def rootjs(path):
 def rootcss(path):
     return send_from_directory('client/css', path)
 
-
 @app.route('/ui/<path:path>')
 def rootui(path):
     return send_from_directory('client/ui', path)
+
+@app.route('/things/<path:path>')
+def rootthings(path):
+    return send_from_directory('client/things', path)
 
 
 # jwt to access this thing with 4-27-21
@@ -49,7 +52,7 @@ def rootui(path):
 def get_token(user):
     if request.method == 'GET':
         return format_return(Auth.get_token())
-    return 'access to that route not allowed', 204
+    return 'access to get_token not allowed', 204
 
 
 # get the whole thing -- limit to get for now since config is assembled
@@ -60,7 +63,7 @@ def get_config(user):
         config = Config.get_config()
         config['users'] = Password.get_users()
         return format_return(config)
-    return 'access to that route not allowed', 204
+    return 'access to get_config not allowed', 204
 
 
 @app.route('/config/features', methods=['GET'])
@@ -68,7 +71,7 @@ def get_config(user):
 def get_features(user):
     if request.method == 'GET':
         return format_return(Config.get_features())
-    return 'access to that route not allowed', 204
+    return 'access to get_features not allowed', 204
 
 
 @app.route('/config/server', methods=['GET', 'PUT'])
@@ -78,7 +81,7 @@ def handle_server(user):
         return format_return(Config.get_server())
     elif request.method == 'PUT':
         return format_return(Config.put_server(request.get_json()))
-    return 'access to that route not allowed', 204
+    return 'access to handle_server not allowed', 204
 
 
 
@@ -90,7 +93,7 @@ def handle_enabled(user):
     elif request.method == 'PUT':
         return format_return(Config.put_enabled(request.get_json()))
     else:
-        return 'access to that route not allowed', 204
+        return 'access to handle_enabled not allowed', 204
 
 
 @app.route('/config/things/<thing>', methods=['GET', 'PUT', 'DELETE'])
@@ -103,7 +106,7 @@ def handle_thing(user, thing):
     elif request.method == 'DELETE':
         return format_return(Config.delete_thing(thing))
     else:
-        return 'access to that service not allowed', 204
+        return 'access to handle_thing not allowed', 204
 
 
 @app.route('/config/helpers/<helper>', methods=['GET', 'PUT', 'DELETE'])
@@ -116,7 +119,7 @@ def handle_helpers(user, helper):
     elif request.method == 'DELETE':
         return format_return(Config.delete_helper(helper))
     else:
-        return 'access to that service not allowed', 204
+        return 'access to handle_helpers not allowed', 204
 
 
 @app.route('/config/pip/<package>', methods=['GET', 'PUT', 'DELETE'])
@@ -132,7 +135,7 @@ def handle_pip(user, package):
     elif request.method == 'DELETE':
         return format_return(Utils.delete_pip(package))
     else:
-        return 'access to that service not allowed', 204
+        return 'access to handle_pip not allowed', 204
 
 
 @app.route('/<service>/<action>', methods=['GET'])
@@ -142,7 +145,7 @@ def handle_service(user, service, action):
         # the service web component prefixes everything with m2ag-
         return format_return(Utils.service_action(service, action))
     else:
-        return 'access to that service not allowed', 200
+        return 'access to handle_service not allowed', 200
 
 
 @app.route('/status/<service>', methods=['GET'])
@@ -170,7 +173,7 @@ def handle_password(user, id):
         result = Password.delete_user(request.get_json())
         htpasswd.load_users(app)
         return format_return(result)
-    return 'access to that route not allowed', 204
+    return 'access to handle_password not allowed', 204
 
 
 def format_return(data):
