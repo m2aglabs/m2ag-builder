@@ -49,6 +49,7 @@ def rootui(path):
 def get_token(user):
     if request.method == 'GET':
         return format_return(Auth.get_token())
+    return 'access to that route not allowed', 204
 
 
 # get the whole thing -- limit to get for now since config is assembled
@@ -59,6 +60,7 @@ def get_config(user):
         config = Config.get_config()
         config['users'] = Password.get_users()
         return format_return(config)
+    return 'access to that route not allowed', 204
 
 
 @app.route('/config/features', methods=['GET'])
@@ -66,6 +68,7 @@ def get_config(user):
 def get_features(user):
     if request.method == 'GET':
         return format_return(Config.get_features())
+    return 'access to that route not allowed', 204
 
 
 @app.route('/config/server', methods=['GET', 'PUT'])
@@ -75,9 +78,8 @@ def handle_server(user):
         return format_return(Config.get_server())
     elif request.method == 'PUT':
         return format_return(Config.put_server(request.get_json()))
+    return 'access to that route not allowed', 204
 
-    else:
-        return 'access to that route not allowed', 204
 
 
 @app.route('/config/enabled', methods=['GET', 'PUT'])
@@ -168,6 +170,7 @@ def handle_password(user, id):
         result = Password.delete_user(request.get_json())
         htpasswd.load_users(app)
         return format_return(result)
+    return 'access to that route not allowed', 204
 
 
 def format_return(data):
