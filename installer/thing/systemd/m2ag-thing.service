@@ -1,0 +1,16 @@
+
+[Unit]
+Description=m2ag.labs thing application
+After=network.target
+
+[Service]
+User=--USER--
+WorkingDirectory=--HOME--/m2ag-labs
+ExecStart=--HOME--/m2ag-labs/venv/bin/python thing.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=m2ag-thing
+
+[Install]
+WantedBy=multi-user.target

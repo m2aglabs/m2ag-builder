@@ -1,0 +1,7 @@
+{
+  "id": "--HOSTNAME--",
+  "ver": "0.0.1",
+  "thing_server": "--HOSTNAME--",
+  "ui": "none",
+  "log_level": "WARNING"
+}

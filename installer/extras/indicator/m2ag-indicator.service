@@ -1,0 +1,15 @@
+
+[Unit]
+Description=m2ag.labs indicator service
+After=network.target
+
+[Service]
+WorkingDirectory=--HOME--/.m2ag-labs/services/indicator
+ExecStart=--HOME--/m2ag-labs/venv/bin/python indicator_service.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=m2ag-indicator
+
+[Install]
+WantedBy=multi-user.target

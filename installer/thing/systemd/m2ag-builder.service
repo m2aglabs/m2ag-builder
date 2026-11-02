@@ -1,0 +1,17 @@
+
+[Unit]
+Description=m2ag.labs thing builder
+After=network.target
+
+[Service]
+User=--USER--
+WorkingDirectory=--HOME--/m2ag-labs
+ExecStart=--HOME--/m2ag-labs/venv/bin/python builder.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=m2ag-builder
+
+
+[Install]
+WantedBy=multi-user.target
