@@ -2,6 +2,8 @@
 config
 device/helpers
 device/available
+webthing/
+webthing
 static
 client/
 client
