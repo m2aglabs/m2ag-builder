@@ -15,12 +15,11 @@ class I2cWrapper:
             lib[self.wrapped] = importlib.import_module(self.wrapped)
         except ModuleNotFoundError:
             self.logging.error(f'{self.wrapped} driver not installed')
-            return
         try:
             self.device = getattr(lib[self.wrapped],
                                   config['init']['device'])(i2c, address=int(config['init']['address'], 16))
-        except:  # TODO: what should the exception be?
-            self.logging.error(f'{self.wrapped} did not initialize')
+        except Exception as e:  # TODO: what should the exception be?
+            self.logging.error(f'{self.wrapped} did not initialize : {e}')
         # TODO: set startup attributes
         if 'attr' in config and len(config['attr']) > 0:
             for i in config['attr']:
@@ -46,6 +45,8 @@ class I2cWrapper:
                 return getattr(self.device, val)
         except AttributeError:
             self.logging.error(f'{self.wrapped} {val} was not found')
+        except OSError as e:
+            self.logging.error(f'{self.wrapped} getting {val}: {e}')
             return -1
 
     def set(self, val):
@@ -53,4 +54,6 @@ class I2cWrapper:
             setattr(self.device, getattr(self.device, val[0]), val[1])
         except AttributeError:
             self.logging.error(f'{self.wrapped} could not set {val[0]} to {val[1]}')
+        except OSError as e:
+            self.logging.error(f'device error setting {val[0]} to {val[1]}: {e}')
             return -1
