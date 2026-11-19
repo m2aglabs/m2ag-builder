@@ -53,7 +53,6 @@ try:
 except FileNotFoundError:
     import string
     import random
-    import socket
 
     rando = string.ascii_lowercase + string.digits
     OPTIONS['secret_key'] = ''.join(random.choice(rando) for i in range(100))
