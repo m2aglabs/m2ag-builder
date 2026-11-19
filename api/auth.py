@@ -67,7 +67,7 @@ AUTH_TTL = 315360000  # 10 years
 class Auth:
     """
         Handle to auth method.
-        This method aim to provide a new authorization token
+        This method aims to provide a new authorization token
         What should the payload be? Just a key for now.
     """
 
@@ -78,7 +78,7 @@ class Auth:
         """
         encoded = jwt.encode({
             'context': 'reserved',
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=AUTH_TTL)},
+            'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=AUTH_TTL)},
             OPTIONS['secret_key'],
             algorithm='HS256'
         )
